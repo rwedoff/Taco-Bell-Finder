@@ -1,4 +1,7 @@
 var map;
+var infoWindow;
+var service;
+
 function initialize() {
   var mapOptions = {
     zoom: 13,
@@ -26,10 +29,15 @@ function initialize() {
     handleNoGeolocation(false);
   }
     
-    
+infoWindow = new google.maps.InfoWindow();
+  service = new google.maps.places.PlacesService(map);
+
+  google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
     
 }
 
+
+//Geolocation
 function handleNoGeolocation(errorFlag) {
   if (errorFlag) {
     var content = 'Error: The Geolocation service failed.';
@@ -48,8 +56,51 @@ function handleNoGeolocation(errorFlag) {
 }
 
 
+function performSearch() {
+  var request = {
+    bounds: map.getBounds(),
+    keyword: 'Taco Bell'
+  };
+  service.radarSearch(request, callback);
+}
 
+function callback(results, status) {
+  if (status != google.maps.places.PlacesServiceStatus.OK) {
+    alert(status);
+    return;
+  }
+  for (var i = 0, result; result = results[i]; i++) {
+    createMarker(result);
+  }
+}
+ var image = {
+    url: 'img/tbellsm.jpg',
+    // This marker is 20 pixels wide by 32 pixels tall.
+    size: new google.maps.Size(32, 32),
+    // The origin for this image is 0,0.
+    origin: new google.maps.Point(0,0),
+    // The anchor for this image is the base of the flagpole at 0,32.
+    anchor: new google.maps.Point(0, 32)
+  };
 
+function createMarker(place) {
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location,
+    icon: image
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    service.getDetails(place, function(result, status) {
+      if (status != google.maps.places.PlacesServiceStatus.OK) {
+        alert(status);
+        return;
+      }
+      infoWindow.setContent(result.name);
+      infoWindow.open(map, marker);
+    });
+  });
+}
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
