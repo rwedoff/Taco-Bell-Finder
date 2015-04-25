@@ -1,11 +1,12 @@
 var map;
 var infoWindow;
 var service;
-
+var zoom;
 function initialize() {
   var mapOptions = {
-    zoom: 13,
+    zoom: 13
   };
+    
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
     
@@ -29,10 +30,14 @@ function initialize() {
     handleNoGeolocation(false);
   }
     
+    
 infoWindow = new google.maps.InfoWindow();
-  service = new google.maps.places.PlacesService(map);
-
-  google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
+  service = new google.maps.places.PlacesService(map);   
+  google.maps.event.addListener(map, 'bounds_changed', performSearch);
+    
+    
+       
+    
     
 }
 
@@ -59,7 +64,9 @@ function handleNoGeolocation(errorFlag) {
 function performSearch() {
   var request = {
     bounds: map.getBounds(),
-    keyword: 'Taco Bell'
+    keyword: 'Taco Bell',
+    types: ['food'],
+      name: 'Taco Bell'
   };
   service.radarSearch(request, callback);
 }
@@ -96,11 +103,12 @@ function createMarker(place) {
         alert(status);
         return;
       }
-      infoWindow.setContent(result.name);
+      infoWindow.setContent(result.name + " " + result.location);
       infoWindow.open(map, marker);
     });
   });
 }
+
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
