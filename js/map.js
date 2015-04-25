@@ -1,10 +1,17 @@
 var map;
 var infoWindow;
 var service;
-var zoom;
+
 function initialize() {
   var mapOptions = {
-    zoom: 13
+    zoom: 13,
+      panControl: true,
+      styles: [{
+          stylers: [
+              {hue: "#000099"},
+              {saturation: -50}
+          ]
+      }]
   };
     
   map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -15,12 +22,13 @@ function initialize() {
       var pos = new google.maps.LatLng(position.coords.latitude,
                                        position.coords.longitude);
 
-      var infowindow = new google.maps.InfoWindow({
-        map: map,
-        position: pos,
-        content: 'Location found using HTML5.'
-      });
-
+    var marker = new google.maps.Marker({
+        map:map,
+        draggable:true,
+        animation: google.maps.Animation.DROP,
+        position: pos
+    });
+  
       map.setCenter(pos);
     }, function() {
       handleNoGeolocation(true);
@@ -29,10 +37,11 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
-    
+        
     
 infoWindow = new google.maps.InfoWindow();
   service = new google.maps.places.PlacesService(map);   
+    
   google.maps.event.addListener(map, 'bounds_changed', performSearch);
     
     
@@ -68,6 +77,7 @@ function performSearch() {
     types: ['food'],
       name: 'Taco Bell'
   };
+    $('#tlist').children().remove();
   service.radarSearch(request, callback);
 }
 
@@ -76,10 +86,11 @@ function callback(results, status) {
     alert(status);
     return;
   }
+    
   for (var i = 0, result; result = results[i]; i++) {
     createMarker(result);
       service.getDetails(result, function(res){
-      $('#tlist').prepend('<li>' + res.name + ": " + res.formatted_address +'</li>');
+      $('#tlist').append('<li>' + res.name + ": " + res.formatted_address +'</li>');
       });
       
       
@@ -108,7 +119,7 @@ function createMarker(place) {
         alert(status);
         return;
       }
-      infoWindow.setContent(result.name + " " + result.formatted_address);
+      infoWindow.setContent(result.name + ": " + result.formatted_address);
       infoWindow.open(map, marker);
     });
   });
