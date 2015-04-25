@@ -78,6 +78,11 @@ function callback(results, status) {
   }
   for (var i = 0, result; result = results[i]; i++) {
     createMarker(result);
+      service.getDetails(result, function(res){
+      $('#tlist').prepend('<li>' + res.name + ": " + res.formatted_address +'</li>');
+      });
+      
+      
   }
 }
  var image = {
@@ -103,7 +108,7 @@ function createMarker(place) {
         alert(status);
         return;
       }
-      infoWindow.setContent(result.name + " " + result.location);
+      infoWindow.setContent(result.name + " " + result.formatted_address);
       infoWindow.open(map, marker);
     });
   });
