@@ -1,7 +1,7 @@
 var map;
 var infoWindow;
 var service;
-var zoom;
+var listRes = [];
 function initialize() {
   var mapOptions = {
     zoom: 13
@@ -73,11 +73,12 @@ function performSearch() {
 
 function callback(results, status) {
   if (status != google.maps.places.PlacesServiceStatus.OK) {
-    alert(status);
+    //alert(status);
     return;
   }
   for (var i = 0, result; result = results[i]; i++) {
     createMarker(result);
+      $('#list').textContent(result);
   }
 }
  var image = {
@@ -103,7 +104,7 @@ function createMarker(place) {
         alert(status);
         return;
       }
-      infoWindow.setContent(result.name + " " + result.location);
+      infoWindow.setContent(result.name + " " + result.formatted_address);
       infoWindow.open(map, marker);
     });
   });
