@@ -3,11 +3,11 @@
     "projectSettingsVersion": "1.2",
     "creationData": {
       "type": "Import",
-      "projectTypeName": "com.intel.xdk.projecttype.webapp",
+      "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "",
-      "projectGuid": "b322673f-a0e2-4bc1-a086-942213b58f48",
-      "lastModifiedDate": 1429997983952,
-      "creationDate": 1429997983898
+      "projectGuid": "2b2355c7-4aad-4891-ae03-b72d499a0416",
+      "lastModifiedDate": 1430007990535,
+      "creationDate": 1430007883065
     },
     "sourceDirectory": "",
     "cordovaPluginsDirectory": "plugins",
@@ -18,12 +18,40 @@
     "projectFiles": {},
     "projectDirectories": {},
     "libraries": [],
-    "cordovaPlugins": [],
+    "cordovaPlugins": [
+      {
+        "id": "org.apache.cordova.device",
+        "version": "0.2.13",
+        "selectedState": "Auto",
+        "data": {},
+        "paramvals": {},
+        "dependsOn": [],
+        "dependedBy": []
+      },
+      {
+        "id": "org.apache.cordova.splashscreen",
+        "version": "0.3.5",
+        "selectedState": "Auto",
+        "data": {},
+        "paramvals": {},
+        "dependsOn": [],
+        "dependedBy": []
+      },
+      {
+        "id": "org.apache.cordova.geolocation",
+        "version": "0.3.11",
+        "selectedState": "Included",
+        "data": {},
+        "paramvals": {},
+        "dependsOn": [],
+        "dependedBy": []
+      }
+    ],
     "serviceMethods": [],
     "buildConfigurations": {
       "Android": {
         "platform_": "android",
-        "runtime_": "W3C on Cordova",
+        "runtime_": "Cordova 3.x",
         "name_": "Android",
         "preferences_": {
           "android-minSdkVersion": "10",
@@ -31,7 +59,7 @@
           "android-installLocation": "auto"
         },
         "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -49,7 +77,7 @@
       },
       "Android-Crosswalk": {
         "platform_": "android",
-        "runtime_": "W3C on Crosswalk",
+        "runtime_": "Crosswalk with Cordova 3.x",
         "name_": "Android-Crosswalk",
         "preferences_": {
           "android-minSdkVersion": "14",
@@ -57,7 +85,7 @@
           "android-installLocation": "auto"
         },
         "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -75,14 +103,14 @@
       },
       "iOS": {
         "platform_": "ios",
-        "runtime_": "W3C on Cordova",
+        "runtime_": "Cordova 3.x",
         "name_": "iOS",
         "preferences_": {
           "ios-target": "6",
           "ios-configuration": "adhoc"
         },
         "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -99,11 +127,11 @@
       },
       "Windows8": {
         "platform_": "windows8",
-        "runtime_": "W3C on Cordova",
+        "runtime_": "Cordova 3.x",
         "name_": "Windows8",
         "preferences_": {},
         "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -122,8 +150,8 @@
         "runtime_": "W3C",
         "name_": "WebApp",
         "preferences_": {},
-        "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "isActive_": false,
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -141,8 +169,8 @@
         "runtime_": "W3C on Firefox OS",
         "name_": "Firefox",
         "preferences_": {},
-        "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "isActive_": false,
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -160,8 +188,8 @@
         "runtime_": "W3C on Chrome OS",
         "name_": "Chrome",
         "preferences_": {},
-        "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "isActive_": false,
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
@@ -179,8 +207,8 @@
         "runtime_": "W3C on Facebook",
         "name_": "Facebook",
         "preferences_": {},
-        "isActive_": true,
-        "appName_": "Taco-Bell-Finder-App",
+        "isActive_": false,
+        "appName_": "tbf3",
         "appID_": "not.yet.specified",
         "appAccess_": [
           {
