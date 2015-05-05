@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
     <link rel="stylesheet" href="css/TBellStyle.css">
 
-
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 
 
@@ -24,39 +24,25 @@
     </div><!-- /header -->
 
     <div class = "ui-content" id = "home">
-
-        <div class = "row">
-            <div class = "col-md-2"></div>
-            <div class = "col-md-8">
-                
                 <div id="map-canvas"></div>
                 <div id="control">
                     <strong>TBells Near You:</strong>
-                      
                     <select id="restaurantSelect" onchange="calcRoute();">
                     <option value="" id="defopt">Select your option</option>
-                    </select>
-                    
-                    
-                    
-                </div>
-            </div>
-            <div class = "col-md-2"></div>
+                    </select>        
         </div>
 
     </div>
 
 
     <div class="ui-content" id="list">
-
+       <p> Selected Tbell From the Map:</p>
         <div id = "InfoDiv" class = "row">
-            
-
-            <div class = "col-md-4">
+            <div class = "col-md-12">
                 <h1 class = "SubHeadline">Directions</h1>
+                
                <center> <div id="directions-panel"></div></center>
             </div>
-
         </div>
 
 

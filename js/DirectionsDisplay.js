@@ -50,7 +50,7 @@ function initialize() {
         } else {
             // Browser doesn't support Geolocation
             handleNoGeolocation(false);
-            alert("Nope");
+            
         }
 
 
@@ -111,7 +111,7 @@ function calcRoute() {
    // var start = document.getElementById('start').value;
     var start = userLocation;
     var end = document.getElementById('restaurantSelect').value;
-    alert(end);
+    
     var request = {
         origin: start,
         destination: end,
@@ -121,6 +121,7 @@ function calcRoute() {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
         }
+       
     });
 
     $infoDivEl.show();

@@ -28,7 +28,6 @@ html{
 #map-canvas {
     height: 65vh;
     
-    
 }
 
 #control {
@@ -62,7 +61,7 @@ html{
 .col-md-8{
 }
 
-.col-md-4{
+.col-md-12{
     text-align: center;
     margin-top: 15px;
     border-left: dimgray 1px solid;
@@ -86,8 +85,4 @@ html{
 #control option{
     background-color: black;
     color: magenta;
-}
-.container{
-
-
 }
