@@ -1,5 +1,6 @@
 /**
  * Created by billrashid on 4/29/15.
+ Edits: Ryan Wedoff 5/6/15
  */
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
@@ -14,7 +15,12 @@ var $selectEL = $('#restaurantSelect');
 var $infoDivEl = $('#InfoDiv');
 $infoDivEl.hide();
 
+var $hoverImg = $('img');
+
+$('#littleMessage').hide().fadeIn(5000);
+
 function initialize() {
+
 
     directionsDisplay = new google.maps.DirectionsRenderer();
 
@@ -23,7 +29,7 @@ function initialize() {
         panControl: true,
         styles: [{
             stylers: [
-                {hue: "#000099"},
+                {hue: "#ff00ff"},
                 {saturation: -50}
             ]
         }]
@@ -50,9 +56,7 @@ function initialize() {
         } else {
             // Browser doesn't support Geolocation
             handleNoGeolocation(false);
-            
         }
-
 
 
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -62,7 +66,6 @@ function initialize() {
 
     var control = document.getElementById('control');
     control.style.display = 'block';
-    
 
     infoWindow = new google.maps.InfoWindow();
     service = new google.maps.places.PlacesService(map);
@@ -83,6 +86,7 @@ function codeAddress() {
           map: map,
           position: results[0].geometry.location
       });
+        userLocation = results[0].geometry.location;
     } else {
       
     }
@@ -107,10 +111,10 @@ function handleNoGeolocation(errorFlag) {
     map.setCenter(options.position);
 }
 
-function calcRoute() {
+function calcRoute(end) {
    // var start = document.getElementById('start').value;
     var start = userLocation;
-    var end = document.getElementById('restaurantSelect').value;
+    
     
     var request = {
         origin: start,
@@ -124,6 +128,9 @@ function calcRoute() {
        
     });
 
+    var nav = "https://www.google.com/maps/dir/Current+Location/" + end;
+    $('#resTb').text(end);
+    $('#resTb').attr('href', nav);
     $infoDivEl.show();
 }
 
@@ -131,6 +138,8 @@ function calcRoute() {
 //get the search from google
 function performSearch() {
 
+
+    console.log('Viewport Bounds Changed');
     var request = {
         bounds: map.getBounds(),
         keyword: 'Taco Bell',
@@ -139,31 +148,33 @@ function performSearch() {
     };
 
     service.radarSearch(request, callback);
-
-    //remove previous results to prevent double adding
-    $selectEL.children().not('#defopt').remove();
 }
 
 
 
 //response from the google
 function callback(results, status) {
-    if (status != google.maps.places.PlacesServiceStatus.OK) {
+
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
         //alert(status);
-        return;
-    }
-    for (var i = 0, result; result = results[i]; i++) {
-        createMarker(result);
-       //works alert('Inside For loop in callback(). After Create Marker');
+        for (var i = 0, result; result = results[i]; i++) {
 
-        service.getDetails(result, function (res) {
-            if(res.formatted_address != null && res.formatted_address != ""){
-            $selectEL.append('<option>' + res.formatted_address + '</option>');
-            }
-        });
-    }
-   
+            createMarker(result);
+            service.getDetails(result, function (res, status) {
 
+                //if nothing was returned
+                if (status != google.maps.places.PlacesServiceStatus.OK) {
+                    return;
+                }
+
+                else if(res.formatted_address){
+                    $selectEL.append('<option>' + res.formatted_address + '</option>');
+                }
+
+            });
+
+        }
+    }
 }
 
 var image = {
@@ -190,10 +201,47 @@ function createMarker(place) {
                // alert(status);
                 return;
             }
-            infoWindow.setContent(result.name + ": " + result.formatted_address);
+            var infoContent = "<p id=\"infoCont\" > " + result.name + ": " + result.formatted_address + "<\p>";
+            infoWindow.setContent(infoContent);
             infoWindow.open(map, marker);
+            var addr = result.formatted_address;
+            calcRoute(addr);
+            
+            
         });
     });
+    
+    
+     /* google.maps.event.addListener(marker, 'mouseover', function () {
+          
+        var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        icon: image
+        });
+    });*/
+    
 }
+
+
+$selectEL.on('mouseover', function(){
+    removeDuplicates();
+});
+$selectEL.on('change', function(){
+    var end = document.getElementById('restaurantSelect').value;
+    calcRoute(end);
+});
+
+$hoverImg.on('mouseover', function(){
+    alert('test');
+   this.addClass('hoverImg');
+});
+var removeDuplicates = function(){
+    var found = [];
+    $("select option").each(function() {
+        if($.inArray(this.value, found) != -1) $(this).remove();
+        found.push(this.value);
+    });
+};
 
 google.maps.event.addDomListener(window, 'load', initialize);
