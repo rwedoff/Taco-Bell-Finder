@@ -72,6 +72,7 @@ function initialize() {
 
     //event handler for bounds change
     google.maps.event.addListener(map, 'bounds_changed', performSearch);
+
 }
 
 function codeAddress() {
@@ -168,7 +169,7 @@ function callback(results, status) {
                 }
 
                 else if(res.formatted_address){
-                    $selectEL.append('<option>' + res.formatted_address + '</option>');
+                    $selectEL.append("<option value="+res.formatted_address+">" + res.formatted_address + '</option>');
                 }
 
             });
