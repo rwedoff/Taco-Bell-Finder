@@ -9,7 +9,6 @@ $(function(){
     });
       $("#home-but").on('click', function(){
         $('#list').hide();
-  
         $('#home').show();
     });
    

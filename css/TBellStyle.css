@@ -31,8 +31,8 @@
 }
 
 #map-canvas {
-<<<<<<< HEAD
-    height: 70vh;
+
+    height: 60vh;
     margin: 1vh;
     
 }
@@ -43,7 +43,6 @@
      height: inherit;
     background: grey;
     margin: 1vh;
-=======
     height: 65vh;
     
 }
@@ -63,7 +62,6 @@
     border: 1px solid #ccc;
     box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
     display: none;
->>>>>>> origin/master
 }
 
 
@@ -81,10 +79,7 @@
 
 #Header{
     font-family: 'Fredericka the Great', sans-serif;
-<<<<<<< HEAD
-=======
     font-size: 4em;
->>>>>>> origin/master
     text-align: center;
     text-decoration: underline;
     overflow: visible;
@@ -100,12 +95,8 @@
 }
 
 #littleMessage {
-    font-family: 'Jaldi', sans-serif;
-<<<<<<< HEAD
-    
-=======
+    font-family: 'Jaldi', sans-serif;    
     font-size: 1.8em;
->>>>>>> origin/master
     text-align: center;
 
 }
@@ -133,8 +124,6 @@
     font-size: 1.15em;
 
 }
-<<<<<<< HEAD
-=======
 #resTb{
     color:magenta;
 }
@@ -143,8 +132,6 @@
     font-family: 'Jaldi', sans-serif;
     font-size: 1.15em;
 }
->>>>>>> origin/master
-
 .hoverImg{
     border: 1px purple solid;
 }
