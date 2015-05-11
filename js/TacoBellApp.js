@@ -1,7 +1,3 @@
-/**
- * Created by billrashid on 4/29/15.
- Edits: Ryan Wedoff 5/6/15
- */
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 
@@ -11,7 +7,7 @@ var service;
 var userLocation;
 var map;
 
-var $selectEL = $('#restaurantSelect');
+//var $selectEL = $('#restaurantSelect');
 var $infoDivEl = $('#InfoDiv');
 $infoDivEl.hide();
 
@@ -28,7 +24,8 @@ function initialize() {
 
     var mapOptions = {
         zoom: 13,
-        panControl: true,
+        panControl: false,
+        disableDefaultUI: true,
         styles: [{
             stylers: [
                 {hue: "#ff00ff"},
@@ -66,8 +63,8 @@ function initialize() {
 
     directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
-    var control = document.getElementById('control');
-    control.style.display = 'block';
+//    var control = document.getElementById('control');
+//    control.style.display = 'block';
 
     infoWindow = new google.maps.InfoWindow();
     service = new google.maps.places.PlacesService(map);
@@ -170,7 +167,7 @@ function callback(results, status) {
 
                 else if(res.formatted_address){
 
-                    $selectEL.append('<option>' + res.formatted_address + '</option>');
+                  //  $selectEL.append('<option>' + res.formatted_address + '</option>');
 
                     /*
                      * This is buggy
@@ -211,21 +208,21 @@ function createMarker(place) {
 }
 
 
-$selectEL.on('mouseover', function(){
-    removeDuplicates();
-});
-$selectEL.on('change', function(){
-    var end = document.getElementById('restaurantSelect').value;
-    calcRoute(end);
-});
-
-var removeDuplicates = function(){
-    var found = [];
-    $("select option").each(function() {
-        if($.inArray(this.value, found) != -1) $(this).remove();
-        found.push(this.value);
-    });
-};
+//$selectEL.on('mouseover', function(){
+//    removeDuplicates();
+//});
+//$selectEL.on('change', function(){
+//    var end = document.getElementById('restaurantSelect').value;
+//    calcRoute(end);
+//});
+//
+//var removeDuplicates = function(){
+//    var found = [];
+//    $("select option").each(function() {
+//        if($.inArray(this.value, found) != -1) $(this).remove();
+//        found.push(this.value);
+//    });
+//};
 
 var revGeocode = function(evt){
 
@@ -254,8 +251,8 @@ var revGeocode = function(evt){
 
 };
 
-var findAddressInSel = function(address){
-    //can't get this to work
-};
+//var findAddressInSel = function(address){
+//    //can't get this to work
+//};
 
 google.maps.event.addDomListener(window, 'load', initialize);
