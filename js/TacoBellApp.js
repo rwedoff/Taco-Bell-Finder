@@ -11,9 +11,11 @@ var service;
 var userLocation;
 var map;
 
-/*var $selectEL = $('#restaurantSelect');*/
+var $selectEL = $('#restaurantSelect');
 var $infoDivEl = $('#InfoDiv');
 $infoDivEl.hide();
+
+var geocoder;
 
 $('#littleMessage').hide().fadeIn(5000);
 
@@ -21,6 +23,8 @@ function initialize() {
 
 
     directionsDisplay = new google.maps.DirectionsRenderer();
+    geocoder = new google.maps.Geocoder();
+
 
     var mapOptions = {
         zoom: 13,
@@ -70,6 +74,7 @@ function initialize() {
 
     //event handler for bounds change
     google.maps.event.addListener(map, 'bounds_changed', performSearch);
+
 }
 
 function codeAddress() {
@@ -112,8 +117,6 @@ function handleNoGeolocation(errorFlag) {
 function calcRoute(end) {
    // var start = document.getElementById('start').value;
     var start = userLocation;
-    
-    
     var request = {
         origin: start,
         destination: end,
@@ -166,7 +169,13 @@ function callback(results, status) {
                 }
 
                 else if(res.formatted_address){
-//                    $selectEL.append('<option>' + res.formatted_address + '</option>');
+
+                    $selectEL.append('<option>' + res.formatted_address + '</option>');
+
+                    /*
+                     * This is buggy
+                     * $selectEL.append('<option value=' +res.formatted_address + '>' + res.formatted_address + '</option>');
+                     */
                 }
 
             });
@@ -193,38 +202,60 @@ function createMarker(place) {
         icon: image
     });
 
-    google.maps.event.addListener(marker, 'click', function () {
-        service.getDetails(place, function (result, status) {
-            if (status != google.maps.places.PlacesServiceStatus.OK) {
-               // alert(status);
-                return;
-            }
-            var infoContent = "<p id=\"infoCont\" > " + result.name + ": " + result.formatted_address + "<\p>";
-            infoWindow.setContent(infoContent);
-            infoWindow.open(map, marker);
-            var addr = result.formatted_address;
-            calcRoute(addr);
-            
-            
-        });
+    google.maps.event.addListener(marker, 'click', function (evt) {
+          //perform reverse geocoding
+          revGeocode(evt);
+          //console.log('answer: ' + clickedAddress);
     });
+    
 }
 
 
-//$selectEL.on('mouseover', function(){
-//    removeDuplicates();
-//});
-//$selectEL.on('change', function(){
-//    var end = document.getElementById('restaurantSelect').value;
-//    calcRoute(end);
-//});
-//
-//var removeDuplicates = function(){
-//    var found = [];
-//    $("select option").each(function() {
-//        if($.inArray(this.value, found) != -1) $(this).remove();
-//        found.push(this.value);
-//    });
-//};
+$selectEL.on('mouseover', function(){
+    removeDuplicates();
+});
+$selectEL.on('change', function(){
+    var end = document.getElementById('restaurantSelect').value;
+    calcRoute(end);
+});
+
+var removeDuplicates = function(){
+    var found = [];
+    $("select option").each(function() {
+        if($.inArray(this.value, found) != -1) $(this).remove();
+        found.push(this.value);
+    });
+};
+
+var revGeocode = function(evt){
+
+    var lat = parseFloat(evt.latLng.lat());
+    var lng = parseFloat(evt.latLng.lng());
+    var latlng = new google.maps.LatLng(lat, lng);
+    var markerAddress = '';
+
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+
+        if (status == google.maps.GeocoderStatus.OK) {
+
+            if (results[1]) {
+                markerAddress = results[0].formatted_address;
+                calcRoute(markerAddress);
+                findAddressInSel(markerAddress);
+            }
+            else {
+                alert('No results found');
+            }
+        }
+        else {
+            alert('Geocoder failed due to: ' + status);
+        }
+    });
+
+};
+
+var findAddressInSel = function(address){
+    //can't get this to work
+};
 
 google.maps.event.addDomListener(window, 'load', initialize);

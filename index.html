@@ -10,80 +10,77 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
     <link rel="stylesheet" href="css/TBellStyle.css">
 
-
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<script>
+    app.hideSplashScreen = function() {
+    "use strict" ;
 
+    // see https://github.com/01org/appframework/blob/master/documentation/detail/%24.ui.launch.md
+    // Do the following if you disabled App Framework autolaunch (in index.html, for example)
+    // $.ui.launch() ;
 
+    if( navigator.splashscreen && navigator.splashscreen.hide ) {   // Cordova API detected
+        navigator.splashscreen.hide() ;
+    }
+    if( window.intel && intel.xdk && intel.xdk.device ) {           // Intel XDK device API detected, but...
+        if( intel.xdk.device.hideSplashScreen )                     // ...hideSplashScreen() is inside the base plugin
+            intel.xdk.device.hideSplashScreen() ;
+    }
+} ;
+       
+    </script>
 </head>
 <body>
-<div class = "container">
+    <div class = "container">
 
-    <div data-role="header" data-position="fixed">
-        <h1 id = "Header">Taco Bell Finder</h1>
-        <p id ="UserDirections">Looking for a TBell...? Find one near you!</p>
-    </div><!-- /header -->
+        <div data-role="header" data-position="fixed" data-tap-toggle="false" id="top">
+            <center><h1 id = "Header">Taco Bell Finder</h1></center>
+         
+        </div><!-- /header -->
 
-    <div class = "ui-content" id = "home">
+        <div class = "ui-content" id = "home">
+                    <div id="map-canvas"></div>
+                    <div id="control">
 
-        <div class = "row">
-            <div class = "col-md-2"></div>
-            <div class = "col-md-8">
-                
-                <div id="map-canvas"></div>
-                <div id="control">
-                    <strong>TBells Near You:</strong>
-                      
-                    <select id="restaurantSelect" onchange="calcRoute();">
-                    <option value="" id="defopt">Select your option</option>
-                    </select>
-                    
-                    
-                    
+                        <!--<select id="restaurantSelect">
+                            <option value="" id="defopt">Pick a Taco Bell</option>
+                        </select>-->
+                    </div>
+        </div>
+
+
+        <div class="ui-content" id="list">
+             <p id="selectedTB"> Selected Tbell From the Map:</p>
+        <a href="" id="resTb"></a>
+            <div id = "InfoDiv" class = "row">
+                <div class = "col-md-12">
+                    <h1 class = "SubHeadline">Directions</h1>
+                   <center> <div id="directions-panel"></div></center>
                 </div>
             </div>
-            <div class = "col-md-2"></div>
         </div>
-
     </div>
 
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+        <div data-role="navbar" data-position="fixed" data-tap-toggle="false" >
+            <ul>
+                <li id="home-but"><a href="index.html" data-role="button" data-icon="location" class="ui-btn-active" class="ui-state-persist">Map</a></li>
+                <li id="list-but"><a href="index.html" data-role="button" data-icon="navigation">Directions</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
 
-    <div class="ui-content" id="list">
-
-        <div id = "InfoDiv" class = "row">
-            
-
-            <div class = "col-md-4">
-                <h1 class = "SubHeadline">Directions</h1>
-               <center> <div id="directions-panel"></div></center>
-            </div>
-
-        </div>
-
-
-    </div>
-</div>
-<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-    <div data-role="navbar" data-position="fixed" data-tap-toggle="false">
-        <ul>
-            <li id="home-but"><a href="index.html" data-role="button" data-icon="location" class="ui-btn-active" class="ui-state-persist">Map</a></li>
-            <li id="list-but"><a href="index.html" data-role="button" data-icon="navigation">Directions</a></li>
-        </ul>
-    </div><!-- /navbar -->
-</div><!-- /footer -->
-
-<script src = "js/jquery.js"></script>
-<script src="js/ui-js.js"></script>
+    <script src = "js/jquery.js"></script>
+    <script  src="js/ui-js.js"></script>
 
 
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script  src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
-<script src = "js/DirectionsDisplay.js"></script>
-
-
-
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places,visualization"></script>
+    <script src = "js/TacoBellApp.js"></script>
 
 </body>
 </html>
