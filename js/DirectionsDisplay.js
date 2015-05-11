@@ -15,6 +15,11 @@ var map;
 var $infoDivEl = $('#InfoDiv');
 $infoDivEl.hide();
 
+<<<<<<< HEAD
+=======
+var $hoverImg = $('img');
+
+>>>>>>> origin/master
 $('#littleMessage').hide().fadeIn(5000);
 
 function initialize() {
@@ -70,6 +75,7 @@ function initialize() {
 
     //event handler for bounds change
     google.maps.event.addListener(map, 'bounds_changed', performSearch);
+
 }
 
 function codeAddress() {
@@ -164,6 +170,7 @@ function callback(results, status) {
                 if (status != google.maps.places.PlacesServiceStatus.OK) {
                     return;
                 }
+<<<<<<< HEAD
 
                 else if(res.formatted_address){
 //                    $selectEL.append('<option>' + res.formatted_address + '</option>');
@@ -171,6 +178,15 @@ function callback(results, status) {
 
             });
 
+=======
+
+                else if(res.formatted_address){
+                    $selectEL.append("<option value="+res.formatted_address+">" + res.formatted_address + '</option>');
+                }
+
+            });
+
+>>>>>>> origin/master
         }
     }
 }
@@ -208,9 +224,21 @@ function createMarker(place) {
             
         });
     });
+    
+    
+     /* google.maps.event.addListener(marker, 'mouseover', function () {
+          
+        var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        icon: image
+        });
+    });*/
+    
 }
 
 
+<<<<<<< HEAD
 //$selectEL.on('mouseover', function(){
 //    removeDuplicates();
 //});
@@ -226,5 +254,26 @@ function createMarker(place) {
 //        found.push(this.value);
 //    });
 //};
+=======
+$selectEL.on('mouseover', function(){
+    removeDuplicates();
+});
+$selectEL.on('change', function(){
+    var end = document.getElementById('restaurantSelect').value;
+    calcRoute(end);
+});
+
+$hoverImg.on('mouseover', function(){
+    alert('test');
+   this.addClass('hoverImg');
+});
+var removeDuplicates = function(){
+    var found = [];
+    $("select option").each(function() {
+        if($.inArray(this.value, found) != -1) $(this).remove();
+        found.push(this.value);
+    });
+};
+>>>>>>> origin/master
 
 google.maps.event.addDomListener(window, 'load', initialize);
